@@ -1,3 +1,6 @@
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { ReactNode } from "react";
+
 export interface InputProps {
     label: string;
     type?: string;
@@ -23,4 +26,22 @@ export interface ButtonProps {
     backgroundColor?: string;
     width?: string | number;
     height?: string | number;
+};
+
+export type RootPublicStackParamList = {
+    LoginScreen: undefined;
+    RegisterScreen: undefined;
+};
+
+export interface NavigationContextProps {
+    navigation: NavigationProp<ParamListBase>;
+};
+
+export interface NavigationProviderProps {
+    children: ReactNode;
+};
+
+export interface IUserCredentials {
+    username: string;
+    password: string;
 };

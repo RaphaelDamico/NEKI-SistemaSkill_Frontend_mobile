@@ -7,9 +7,13 @@ import CustomCheckbox from "../Checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "../Button";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { NavigationProp } from "@react-navigation/native";
+import { RootPublicStackParamList } from "../../interfaces";
+import LoadingIcon from "../LoadingIcon";
+import { signinUser } from "../../api";
 
 
-export default function LoginForm() {
+export default function LoginForm({ navigation }: { navigation: NavigationProp<RootPublicStackParamList> }) {
     const [hasError, setHasError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [isChecked, setIsChecked] = useState(false);
@@ -41,6 +45,29 @@ export default function LoginForm() {
         loadCredentials();
     }, [setUsername, setPassword]);
 
+    const loginUser = async() => {
+        setHasError(false);
+        setErrorMessage("");
+        setLoading(true);
+        try {
+            await signinUser({ username, password });
+            // navigate("/");
+            if (isChecked) {
+                AsyncStorage.setItem("savedUsername", username);
+                AsyncStorage.setItem("savedPassword", password);
+            } else {
+                AsyncStorage.removeItem("savedUsername");
+                AsyncStorage.removeItem("savedPassword");
+            }
+        } catch (error) {
+            setHasError(true);
+            setErrorMessage("Falha no login. Verifique suas credenciais e tente novamente.");
+            console.error("Falha no login", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
         if (!isChecked) {
@@ -62,15 +89,15 @@ export default function LoginForm() {
                     value={username}
                     onChangeText={(text) => setUsername(text)}
                     placeholder="Digite seu nome de usuario"
-                    id="username"
+                    type="text"
                 />
                 <Input
                     label="Senha"
                     hasIcon
                     value={password}
-                    onChangeText={(text) => setUsername(text)}
+                    onChangeText={(text) => setPassword(text)}
                     placeholder="Digite sua senha"
-                    id="password"
+                    type="password"
                 />
                 <CustomCheckbox
                     label="Salvar senha"
@@ -83,13 +110,13 @@ export default function LoginForm() {
                     </View>
                 }
                 <Button
-                    content={loading ? <AntDesign name="loading1" size={24} color="#F9F9F9" /> : "Entrar"}
-                    onPress ={() => {}}
+                    content={loading ? <LoadingIcon /> : "Entrar"}
+                    onPress ={() => {loginUser()}}
                     backgroundColor={"#1A374B"}
                 />
                 <Button
                     content={"Cadastrar"}
-                    onPress={() => {}}
+                    onPress={() => {navigation.navigate("RegisterScreen") }}
                     backgroundColor={"#4EB888"}
                 />
             </View>

@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
     checkboxContainer: {
         width: "85%",
         alignSelf: "center",
-        paddingTop: "3%",
         flexDirection: "row",
         alignItems: "center",
         gap: 5,

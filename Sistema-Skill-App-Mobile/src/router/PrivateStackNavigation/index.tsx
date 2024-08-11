@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../../../screens/HomeScreen';
-import { RootPrivateStackParamList } from '../../../interfaces';
+import HomeScreen from '../../screens/HomeScreen';
+import { RootPrivateStackParamList } from '../../interfaces';
 
 const Stack = createNativeStackNavigator<RootPrivateStackParamList>();
 

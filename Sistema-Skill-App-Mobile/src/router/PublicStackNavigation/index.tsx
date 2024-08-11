@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '../../../screens/LoginScreen';
-import RegisterScreen from '../../../screens/RegisterScreen';
-import { RootPublicStackParamList } from '../../../interfaces';
+import LoginScreen from '../../screens/LoginScreen';
+import RegisterScreen from '../../screens/RegisterScreen';
+import { RootPublicStackParamList } from '../../interfaces';
 
 const Stack = createNativeStackNavigator<RootPublicStackParamList>();
 

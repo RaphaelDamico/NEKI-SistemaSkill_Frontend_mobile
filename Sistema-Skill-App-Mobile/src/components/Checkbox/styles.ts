@@ -8,6 +8,19 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         gap: 5,
     },
+    checkbox: {
+        width: 24,
+        height: 24,
+        borderRadius: 4,
+        borderWidth: 2,
+        borderColor: "#000",
+        backgroundColor: "#FFF",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    checked: {
+        backgroundColor: "#FFF",
+    },
     checkboxLabel: {
         fontSize: 15,
         fontWeight: "500",

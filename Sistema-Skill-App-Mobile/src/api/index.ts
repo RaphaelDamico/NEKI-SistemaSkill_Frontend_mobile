@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Alert } from "react-native";
-import { IUserCredentials } from "../interfaces";
+import { IUserCredentials, Skill, UpdateUserSkill, UpdateUserSkillLevelResponse, UserSkillRequest, UserSkillResponse } from "../interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const api = axios.create({
-    baseURL: " https://3f8f-138-117-222-49.ngrok-free.app/"
+    baseURL: "https://1ac0-138-117-222-49.ngrok-free.app/"
 });
 
 const handleRegisterError = (error: unknown) => {
@@ -86,6 +86,124 @@ export const signinUser = async (payload: IUserCredentials): Promise<void> => {
         await AsyncStorage.setItem("userId", JSON.stringify(userId));
         Alert.alert("Login realizado com sucesso");
     } catch (error: unknown) {
-        handleAuthError(error);
+        if (axios.isAxiosError(error) && error.response?.status === 404)
+            throw new Error("Login ou senha incorretos, verifique suas credenciais");
+        else {
+            handleRegisterError(error);
+            throw new Error("Erro desconhecido ao efetuar login");
+        }
+    }
+};
+
+export const addSkillToUser = async (payload: UserSkillRequest[]): Promise<Skill[] | null> => {
+    try {
+        const token = await AsyncStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+        const response = await api.post<Skill[]>("skills/add-existing", payload, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao adicionar skill ao usuário: ", error);
+        return null;
+    }
+};
+
+export const getAllSkills = async (): Promise<Skill[] | null> => {
+    try {
+        const token = await AsyncStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+        const response = await api.get<Skill[]>("skills", {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar skills:", error);
+        return null;
+    }
+};
+
+export const getUserSkills = async (userId: number): Promise<UserSkillResponse | null> => {
+    try {
+        const token = await AsyncStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+        const response = await api.get<UserSkillResponse>(`users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar skills do usuário:", error);
+        return null;
+    }
+};
+
+export const getUserIdFromToken = async(): Promise<number | null> => {
+    const token = await AsyncStorage.getItem("userToken");
+    if (!token) return null;
+
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return decodedToken.userId || null;
+};
+
+export const updateUserSkillLevel = async ({ userSkillId, level}:UpdateUserSkill ): Promise<UpdateUserSkillLevelResponse> => {
+    try {
+        const token = await AsyncStorage.getItem("userToken");
+        if (!token) throw new Error("Token não encontrado");
+
+        await api.put(`skills/level`,
+            { userSkillId, level },
+            {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            }
+        );
+        return {
+            success: true,
+            message: "Nível da habilidade atualizado com sucesso!",
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(`Erro ao atualizar nível da skill com o id ${userSkillId}:`, error.message);
+            return {
+                success: false,
+                message: `Erro: ${error.response?.data || error.message}`
+            };
+        } else {
+            console.error("Erro desconhecido:", error);
+            return {
+                success: false,
+                message: "Erro desconhecido ao atualizar o nível da habilidade.",
+            };
+        }
+    }
+};
+
+export const deleteUserSkill = async (skillId: number): Promise<void> => {
+    try {
+        const token = await AsyncStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+
+        await api.delete(`skills/${skillId}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+    } catch (error) {
+        console.error(`Erro ao deletar skill com o id ${skillId}:`, error);
     }
 };

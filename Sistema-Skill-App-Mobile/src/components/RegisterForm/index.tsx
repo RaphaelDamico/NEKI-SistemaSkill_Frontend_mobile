@@ -3,7 +3,6 @@ import Input from "../Input";
 import Button from "../Button";
 import { useState } from "react";
 import { useRegisterUser } from "../../contexts/RegisterUserContext";
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { styles } from "./styles";
 import { NavigationProp } from "@react-navigation/native";
 import { RootPublicStackParamList } from "../../interfaces";
@@ -98,12 +97,12 @@ export default function RegisterForm({ navigation }: { navigation: NavigationPro
                 <Button
                     content={loading ? <LoadingIcon /> : "Cadastrar"}
                     onPress={() => {registerUser()}}
-                    backgroundColor={"#1A374B"}
+                    style={{alignSelf: "center", backgroundColor: "#1A374B", width: "80%"}}
                 />
                 <Button
                     content={"Cancelar"}
                     onPress={() => { navigation.navigate("LoginScreen") }}
-                    backgroundColor={"#4EB888"}
+                    style={{alignSelf: "center", backgroundColor: "#4EB888", width: "80%"}}
                 />
             </View>
         </View>

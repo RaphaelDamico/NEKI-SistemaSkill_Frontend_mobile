@@ -6,15 +6,11 @@ import { useEffect, useState } from "react";
 import CustomCheckbox from "../Checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "../Button";
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { CommonActions, NavigationProp } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
 import { RootPublicStackParamList } from "../../interfaces";
 import LoadingIcon from "../LoadingIcon";
-import { signinUser } from "../../api";
-
 
 export default function LoginForm({ navigation }: { navigation: NavigationProp<RootPublicStackParamList> }) {
-    const [hasError, setHasError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [isChecked, setIsChecked] = useState(false);
 
@@ -24,60 +20,73 @@ export default function LoginForm({ navigation }: { navigation: NavigationProp<R
         password,
         setPassword,
         loading,
-        setLoading
+        loginUser
     } = useAuthUser();
 
     useEffect(() => {
         const loadCredentials = async () => {
-            const savedUsername = await AsyncStorage.getItem("savedUsername");
-        const savedPassword =await AsyncStorage.getItem("savedPassword");
+            try {
+                const savedUsername = await AsyncStorage.getItem("savedUsername");
+                const savedPassword = await AsyncStorage.getItem("savedPassword");
 
-        if (savedUsername) {
-            setUsername(savedUsername);
-            setIsChecked(true);
-        }
-        if (savedPassword) {
-            setPassword(savedPassword);
-            setIsChecked(true);
-        }
+                if (savedUsername) {
+                    setUsername(savedUsername);
+                    setIsChecked(true);
+                }
+                if (savedPassword) {
+                    setPassword(savedPassword);
+                    setIsChecked(true);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar as credenciais salvas:", error);
+            }
         };
 
         loadCredentials();
     }, [setUsername, setPassword]);
 
-    const loginUser = async () => {
-        setHasError(false);
-        setErrorMessage("");
-        setLoading(true);
-        try {
-            await signinUser({ username, password });
-            if (isChecked) {
-                AsyncStorage.setItem("savedUsername", username);
-                AsyncStorage.setItem("savedPassword", password);
-            } else {
-                AsyncStorage.removeItem("savedUsername");
-                AsyncStorage.removeItem("savedPassword");
+    const saveCredentials = async () => {
+        if (isChecked) {
+            try {
+                await AsyncStorage.setItem("savedUsername", username);
+                await AsyncStorage.setItem("savedPassword", password);
+            } catch (error) {
+                console.log('Erro ao salvar username e senha:', error);
             }
-        } catch (error) {
-            setHasError(true);
-            setErrorMessage("Falha no login. Verifique suas credenciais e tente novamente.");
-            console.error("Falha no login", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-        if (!isChecked) {
-            AsyncStorage.setItem("savedUsername", username);
-            AsyncStorage.setItem("savedPassword", password);
         } else {
-            AsyncStorage.removeItem("savedUsername");
-            AsyncStorage.removeItem("savedPassword");
+            try {
+                await AsyncStorage.removeItem("savedUsername");
+                await AsyncStorage.removeItem("savedPassword");
+            } catch (error) {
+                console.log('Erro ao remover username e senha:', error);
+            }
         }
     };
 
+    const handleLogin = async () => {
+        setErrorMessage("");
+        try {
+            await loginUser();
+            await saveCredentials();
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                if (error.message === "Login ou senha incorretos, verifique suas credenciais") {
+                    setErrorMessage(error.message);
+                } else {
+                    setErrorMessage("Falha no login. Verifique suas credenciais e tente novamente.");
+                }
+                console.error("Falha no login", error);
+            } else {
+                setErrorMessage("Ocorreu um erro desconhecido");
+                console.error("Erro desconhecido", error);
+            }
+        }
+    };
+
+    const handleCheckboxChange = async () => {
+        setIsChecked(!isChecked);
+        await saveCredentials();
+    };
     return (
         <View style={styles.formContainer}>
             <View
@@ -103,20 +112,20 @@ export default function LoginForm({ navigation }: { navigation: NavigationProp<R
                     value={isChecked}
                     onValueChange={handleCheckboxChange}
                 />
-                {hasError &&
+                {errorMessage !== "" && (
                     <View style={styles.errorContainer}>
                         <Text style={styles.errorSpan}>{errorMessage}</Text>
                     </View>
-                }
+                )}
                 <Button
                     content={loading ? <LoadingIcon /> : "Entrar"}
-                    onPress ={() => {loginUser()}}
-                    backgroundColor={"#1A374B"}
+                    onPress={() => { handleLogin() }}
+                    style={{ alignSelf: "center", backgroundColor: "#1A374B", width: "80%" }}
                 />
                 <Button
                     content={"Cadastrar"}
-                    onPress={() => {navigation.navigate("RegisterScreen") }}
-                    backgroundColor={"#4EB888"}
+                    onPress={() => { navigation.navigate("RegisterScreen") }}
+                    style={{ alignSelf: "center", backgroundColor: "#4EB888", width: "80%" }}
                 />
             </View>
         </View>

@@ -1,19 +1,18 @@
-import { View, Text } from "react-native";
+import React from "react";
+import { Text, View, StyleSheet, Pressable } from "react-native";
+import Icon from "../Icon";
 import { styles } from "./styles";
-import { CheckboxProps } from "../../interfaces";
-import Checkbox from 'expo-checkbox';
+import { CustomCheckboxProps } from "../../interfaces";
 
-export default function CustomCheckbox({ label, value, onValueChange, id }: CheckboxProps) {
-    return(
+export default function CustomCheckbox({ value, onValueChange, label, id }: CustomCheckboxProps) {
+    return (
         <View style={styles.checkboxContainer}>
-        <Checkbox
-            value={value}
-            onValueChange={onValueChange}
-            accessibilityLabelledBy={id}
-        />
-        <Text nativeID={id} style={styles.checkboxLabel}>
+            <Pressable onPress={() => onValueChange(!value)} style={[styles.checkbox, value && styles.checked]}>
+            {value && <Icon name={"check"} color="blue" size={15} />}
+        </Pressable>
+            <Text nativeID={id} style={styles.checkboxLabel}>
             {label}
         </Text>
-    </View>
+        </View>
     );
-};
+}

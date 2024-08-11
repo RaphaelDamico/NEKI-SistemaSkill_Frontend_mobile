@@ -1,11 +1,14 @@
 import React from 'react';
 import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { StyleProp, ViewStyle } from 'react-native';
 
 interface IconProps {
     name: keyof typeof icons;
-    style?: object;
+    style?: StyleProp<ViewStyle>;
     color?: string;
+    size?: number | string;
     onPress?: () => void;
 }
 
@@ -25,10 +28,14 @@ const icons = {
     edit: {
         component: FontAwesome6,
         name: "edit"
+    },
+    check: {
+        component: FontAwesome,
+        name: "check"
     }
 };
 
-export default function Icon({ name, style, color, onPress }: IconProps) {
+export default function Icon({ name, style, color, size, onPress }: IconProps) {
     const iconData = icons[name];
 
     if (!iconData) return null;
@@ -40,6 +47,7 @@ export default function Icon({ name, style, color, onPress }: IconProps) {
             name={iconData.name}
             style={style}
             color={color}
+            size={size}
             onPress={onPress}
         />
     );

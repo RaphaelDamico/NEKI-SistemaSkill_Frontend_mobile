@@ -27,7 +27,7 @@ export default function StarRating({ rating, onRatingChange, isEditing, onSave }
                     key={star}
                     style={[
                         styles.star,
-                        { color: star <= tempRating ? "#FFD700"  : "#CCC" }
+                        { color: star <= tempRating ? "#FFD700" : "#CCC" }
                     ]}
                     onPress={() => handlePress(star)}
                 >
@@ -38,7 +38,7 @@ export default function StarRating({ rating, onRatingChange, isEditing, onSave }
                 <Button
                     content={"Salvar"}
                     onPress={onSave}
-                    style={{backgroundColor: "#1A374B", width: 80}}
+                    style={{ backgroundColor: "#1A374B", width: 80 }}
                     width={70}
                 />
             )}

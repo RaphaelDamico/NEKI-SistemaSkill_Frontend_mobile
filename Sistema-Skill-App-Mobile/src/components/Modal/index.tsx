@@ -5,6 +5,7 @@ import { styles } from "./styles";
 import { FlatList, Text, View } from "react-native";
 import Button from "../Button";
 import CardModal from "../CardModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ModalProps {
     isVisibleModal: boolean;
@@ -46,12 +47,16 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
 
     const handleSave = async () => {
         try {
+            const userIdString = await AsyncStorage.getItem("userId");
+            const userId = userIdString ? parseInt(userIdString, 10) : null;
+            if (!userId)
+                throw new Error("User ID não encontrado");
             await addSkillToUser(skillsList?.filter((item) => {
                 return item.checked === true;
             }).map((item) => ({
                 skillId: item.skillId,
-                userId: 1
-            }) as UserSkillRequest)|| [] );
+                userId: userId
+            }) as UserSkillRequest) || []);
             onSave();
         } catch (error) {
             console.error(error);
@@ -68,9 +73,9 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
                             <Text style={styles.headerTitle}>Selecionar Skill</Text>
                         </View>
                         <View style={styles.modalContent}>
-                        <FlatList
-                        contentContainerStyle={{gap: 5}}
-                        style={{maxHeight: 100, bottom: 10}}
+                            <FlatList
+                                contentContainerStyle={{ gap: 5 }}
+                                style={{ maxHeight: 100, bottom: 10 }}
                                 data={skillsList}
                                 keyExtractor={(item) => item.skillId.toString()}
                                 renderItem={({ item }) => (
@@ -85,12 +90,12 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
                         <View style={styles.buttonContainer}>
                             <Button
                                 content={"Cancelar"}
-                                style={{backgroundColor: "#D9534F", width: 100}}
+                                style={{ backgroundColor: "#D9534F", width: 100 }}
                                 onPress={() => onCancel()}
                             />
                             <Button
                                 content={"Salvar"}
-                                style={{backgroundColor: "#356F7A", width: 100}}
+                                style={{ backgroundColor: "#356F7A", width: 100 }}
                                 onPress={() => handleSave()}
                             />
                         </View>
@@ -99,4 +104,4 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
             }
         </>
     );
-}
+};

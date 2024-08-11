@@ -3,6 +3,7 @@ import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { StyleProp, ViewStyle } from 'react-native';
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 
 interface IconProps {
     name: keyof typeof icons;
@@ -32,6 +33,10 @@ const icons = {
     check: {
         component: FontAwesome,
         name: "check"
+    },
+    logout: {
+        component: SimpleLineIcons,
+        name: "logout"
     }
 };
 

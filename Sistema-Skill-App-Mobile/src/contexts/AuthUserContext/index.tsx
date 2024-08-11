@@ -59,7 +59,7 @@ export const AuthUserProvider = ({ children }: { children: ReactNode }) => {
         setUser(null);
     };
 
-    return(
+    return (
         <AuthUserContext.Provider value={{
             signed: !!user,
             username,
@@ -71,14 +71,14 @@ export const AuthUserProvider = ({ children }: { children: ReactNode }) => {
             loginUser,
             signOut
         }}>
-            { children }
+            {children}
         </AuthUserContext.Provider>
     );
 };
 
-export const useAuthUser =(): AuthUserContextProps => {
+export const useAuthUser = (): AuthUserContextProps => {
     const context = useContext(AuthUserContext);
-    if(!context)
+    if (!context)
         throw new Error("useAuthUser deve ser usado com um AuthUserProvider");
     return context;
 };

@@ -96,13 +96,13 @@ export default function RegisterForm({ navigation }: { navigation: NavigationPro
                 }
                 <Button
                     content={loading ? <LoadingIcon /> : "Cadastrar"}
-                    onPress={() => {registerUser()}}
-                    style={{alignSelf: "center", backgroundColor: "#1A374B", width: "80%"}}
+                    onPress={() => { registerUser() }}
+                    style={{ alignSelf: "center", backgroundColor: "#1A374B", width: "80%" }}
                 />
                 <Button
                     content={"Cancelar"}
                     onPress={() => { navigation.navigate("LoginScreen") }}
-                    style={{alignSelf: "center", backgroundColor: "#4EB888", width: "80%"}}
+                    style={{ alignSelf: "center", backgroundColor: "#4EB888", width: "80%" }}
                 />
             </View>
         </View>

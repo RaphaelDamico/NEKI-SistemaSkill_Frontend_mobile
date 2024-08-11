@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, Pressable } from "react-native";
 import Icon from "../Icon";
 import { styles } from "./styles";
 import { CustomCheckboxProps } from "../../interfaces";

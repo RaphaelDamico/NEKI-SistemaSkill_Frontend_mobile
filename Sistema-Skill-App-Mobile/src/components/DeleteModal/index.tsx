@@ -22,13 +22,13 @@ export default function DeleteModal({ isVisibleModal, onCancel, onDelete }: Dele
                         <View style={styles.buttonContainer}>
                             <Button
                                 content={"Cancelar"}
-                                style={{backgroundColor: "#D9534F", width: 100}}
+                                style={{ backgroundColor: "#D9534F", width: 100 }}
                                 width={100}
                                 onPress={() => onCancel()}
                             />
                             <Button
                                 content={"Deletar"}
-                                style={{backgroundColor: "#356F7A", width: 100}}
+                                style={{ backgroundColor: "#356F7A", width: 100 }}
                                 width={100}
                                 onPress={() => onDelete()}
                             />

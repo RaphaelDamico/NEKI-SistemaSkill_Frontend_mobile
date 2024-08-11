@@ -57,7 +57,7 @@ export const signupUser = async (payload: IUserCredentials): Promise<void> => {
             Alert.alert("Erro ao registrar usuário, tente novamente.")
         }
     } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) 
+        if (axios.isAxiosError(error) && error.response?.status === 409)
             throw new Error("Este nome de usuário já existe");
         else {
             handleRegisterError(error);
@@ -89,7 +89,7 @@ export const signinUser = async (payload: IUserCredentials): Promise<void> => {
         if (axios.isAxiosError(error) && error.response?.status === 404)
             throw new Error("Login ou senha incorretos, verifique suas credenciais");
         else {
-            handleRegisterError(error);
+            handleAuthError(error);
             throw new Error("Erro desconhecido ao efetuar login");
         }
     }
@@ -149,15 +149,7 @@ export const getUserSkills = async (userId: number): Promise<UserSkillResponse |
     }
 };
 
-export const getUserIdFromToken = async(): Promise<number | null> => {
-    const token = await AsyncStorage.getItem("userToken");
-    if (!token) return null;
-
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-    return decodedToken.userId || null;
-};
-
-export const updateUserSkillLevel = async ({ userSkillId, level}:UpdateUserSkill ): Promise<UpdateUserSkillLevelResponse> => {
+export const updateUserSkillLevel = async ({ userSkillId, level }: UpdateUserSkill): Promise<UpdateUserSkillLevelResponse> => {
     try {
         const token = await AsyncStorage.getItem("userToken");
         if (!token) throw new Error("Token não encontrado");

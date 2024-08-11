@@ -7,6 +7,7 @@ import { UserSkill } from "../../interfaces";
 import { deleteUserSkill, getUserSkills } from "../../api";
 import Card from "../../components/Card";
 import DeleteModal from "../../components/DeleteModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function HomeScreen() {
@@ -21,7 +22,12 @@ export default function HomeScreen() {
 
     const getUserSkillsList = async () => {
         try {
-            const data = await getUserSkills(1);
+            const userIdString = await AsyncStorage.getItem("userId");
+            const userId = userIdString ? parseInt(userIdString, 10) : null;
+            if (!userId) {
+                throw new Error("User ID não encontrado");
+            }
+            const data = await getUserSkills(userId);
             if (data) {
                 setUserSkillList(data.userSkills);
             } else {
@@ -75,7 +81,7 @@ export default function HomeScreen() {
     return (
         <View style={styles.container}>
             <Header setIsModalOpen={setIsModalOpen} />
-            <ScrollView style={{paddingVertical: 15}}>
+            <ScrollView style={{ paddingVertical: 15 }}>
                 {userSkillList.map((skill) => (
                     <Card
                         key={skill.userSkillId}

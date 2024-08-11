@@ -7,7 +7,7 @@ import CustomCheckbox from "../Checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "../Button";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { NavigationProp } from "@react-navigation/native";
+import { CommonActions, NavigationProp } from "@react-navigation/native";
 import { RootPublicStackParamList } from "../../interfaces";
 import LoadingIcon from "../LoadingIcon";
 import { signinUser } from "../../api";
@@ -45,13 +45,12 @@ export default function LoginForm({ navigation }: { navigation: NavigationProp<R
         loadCredentials();
     }, [setUsername, setPassword]);
 
-    const loginUser = async() => {
+    const loginUser = async () => {
         setHasError(false);
         setErrorMessage("");
         setLoading(true);
         try {
             await signinUser({ username, password });
-            // navigate("/");
             if (isChecked) {
                 AsyncStorage.setItem("savedUsername", username);
                 AsyncStorage.setItem("savedPassword", password);

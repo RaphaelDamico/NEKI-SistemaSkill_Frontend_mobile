@@ -8,6 +8,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import { RegisterUserProvider } from './src/contexts/RegisterUserContext';
 import PublicStack from './src/components/router/PublicStackNavigation';
 import { NavigationContainer } from '@react-navigation/native';
+import Routes from './src/components/router';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +32,7 @@ export default function App() {
       <RegisterUserProvider>
         <AuthUserProvider>
           <NavigationContainer>
-            <PublicStack />
+            <Routes />
           </NavigationContainer>
         </AuthUserProvider>
       </RegisterUserProvider>

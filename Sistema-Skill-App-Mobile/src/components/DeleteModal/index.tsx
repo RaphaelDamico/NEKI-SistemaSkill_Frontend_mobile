@@ -1,12 +1,7 @@
 import { Text, View } from "react-native";
 import Button from "../Button";
 import { styles } from "./styles";
-
-interface DeleteModalProps {
-    isVisibleModal: boolean;
-    onCancel: () => void;
-    onDelete: () => void;
-};
+import { DeleteModalProps } from "../../interfaces";
 
 export default function DeleteModal({ isVisibleModal, onCancel, onDelete }: DeleteModalProps) {
 

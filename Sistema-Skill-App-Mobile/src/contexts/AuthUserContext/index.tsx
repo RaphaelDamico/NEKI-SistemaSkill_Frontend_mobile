@@ -1,19 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { signinUser } from "../../api";
-
-
-interface AuthUserContextProps {
-    username: string;
-    setUsername: (username: string) => void;
-    password: string;
-    setPassword: (password: string) => void;
-    loading: boolean;
-    setLoading: (loading: boolean) => void;
-    loginUser: () => Promise<void>;
-    signOut: () => Promise<void>;
-    signed: boolean;
-}
+import { AuthUserContextProps } from "../../interfaces";
 
 const AuthUserContext = createContext<AuthUserContextProps | undefined>(undefined);
 

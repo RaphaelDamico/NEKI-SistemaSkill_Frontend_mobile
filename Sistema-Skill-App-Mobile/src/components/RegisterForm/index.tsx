@@ -9,7 +9,6 @@ import { RootPublicStackParamList } from "../../interfaces";
 import LoadingIcon from "../LoadingIcon";
 import { signupUser } from "../../api";
 
-
 export default function RegisterForm({ navigation }: { navigation: NavigationProp<RootPublicStackParamList> }) {
     const [hasError, setHasError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -107,4 +106,4 @@ export default function RegisterForm({ navigation }: { navigation: NavigationPro
             </View>
         </View>
     );
-}
+};

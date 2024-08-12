@@ -12,4 +12,4 @@ export default function PublicStack() {
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         </Stack.Navigator>
     );
-}
+};

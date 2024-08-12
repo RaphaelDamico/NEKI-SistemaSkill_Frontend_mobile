@@ -1,15 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-
-interface RegisterUserContextProps {
-    username: string;
-    setUsername: (username: string) => void;
-    password: string;
-    setPassword: (password: string) => void;
-    confirmPassword: string;
-    setConfirmPassword: (confirmPassword: string) => void;
-    loading: boolean;
-    setLoading: (loading: boolean) => void;
-}
+import { RegisterUserContextProps } from "../../interfaces";
 
 const RegisterUserContext = createContext<RegisterUserContextProps | undefined>(undefined);
 

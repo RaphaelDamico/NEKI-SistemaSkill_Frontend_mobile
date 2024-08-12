@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
         elevation: 10,
         zIndex: 1000,
         width: "80%",
-        height: "20%",  // A altura foi ajustada para se adequar ao conteúdo
+        height: "20%",
         justifyContent: "center",
         alignItems: "center",
     },

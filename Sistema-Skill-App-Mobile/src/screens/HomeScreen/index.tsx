@@ -42,7 +42,6 @@ export default function HomeScreen() {
     const handleSaveSkills = async () => {
         await getUserSkillsList();
         handleCloseModal();
-        Alert.alert("Skill adicionada à lista do usuário")
     };
 
     const handleCloseModal = () => {

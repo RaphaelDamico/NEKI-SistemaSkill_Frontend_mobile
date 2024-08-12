@@ -10,4 +10,4 @@ export default function PrivateStack() {
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
         </Stack.Navigator>
     );
-}
+};

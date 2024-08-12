@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
-import { Skill, UserSkill, UserSkillRequest } from "../../interfaces";
+import { ModalProps, Skill, UserSkillRequest } from "../../interfaces";
 import { addSkillToUser, getAllSkills } from "../../api";
 import { styles } from "./styles";
 import { FlatList, Text, View } from "react-native";
 import Button from "../Button";
 import CardModal from "../CardModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-interface ModalProps {
-    isVisibleModal: boolean;
-    onCancel: () => void;
-    onSave: () => void;
-    userSkills: UserSkill[];
-}
 
 export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: ModalProps) {
     const [skillsList, setSkillsList] = useState<Skill[] | null>();

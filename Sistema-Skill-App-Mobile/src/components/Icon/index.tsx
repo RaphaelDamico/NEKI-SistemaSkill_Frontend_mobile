@@ -11,7 +11,7 @@ interface IconProps {
     color?: string;
     size?: number | string;
     onPress?: () => void;
-}
+};
 
 const icons = {
     eyeClosed: {

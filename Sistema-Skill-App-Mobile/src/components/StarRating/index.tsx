@@ -2,13 +2,7 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
 import Button from "../Button";
-
-interface StarRatingProps {
-    rating: number;
-    onRatingChange: (newRating: number) => void;
-    isEditing: boolean;
-    onSave: () => void;
-}
+import { StarRatingProps } from "../../interfaces";
 
 export default function StarRating({ rating, onRatingChange, isEditing, onSave }: StarRatingProps) {
     const [tempRating, setTempRating] = useState(rating);
@@ -44,4 +38,4 @@ export default function StarRating({ rating, onRatingChange, isEditing, onSave }
             )}
         </View>
     );
-}
+};

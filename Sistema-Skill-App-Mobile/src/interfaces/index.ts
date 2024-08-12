@@ -2,6 +2,39 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ReactNode } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
+export interface ButtonProps {
+    content: string | React.ReactNode;
+    onPress?: () => void;
+    style?: StyleProp<ViewStyle>;
+    width?: string | number;
+    height?: string | number;
+};
+
+export interface CardProps {
+    userSkill: UserSkill;
+    deleteSkill: (userId: number) => void;
+    refreshSkills: () => void;
+};
+
+export interface CardModalProps {
+    skill: Skill;
+    onValueChange: () => void;
+};
+
+export interface CustomCheckboxProps {
+    value: boolean;
+    onValueChange: (value: boolean) => void;
+    label?: string;
+    accessibilityLabelledBy?: string;
+    id?: string;
+};
+
+export interface DeleteModalProps {
+    isVisibleModal: boolean;
+    onCancel: () => void;
+    onDelete: () => void;
+};
+
 export interface InputProps {
     label: string;
     type?: string;
@@ -13,20 +46,45 @@ export interface InputProps {
     hasIcon?: boolean;
 };
 
-export interface CustomCheckboxProps {
-    value: boolean;
-    onValueChange: (value: boolean) => void;
-    label?: string;
-    accessibilityLabelledBy?: string;
-    id?: string;
-}
+export interface HeaderProps {
+    setIsModalOpen: (value: boolean) => void;
+};
 
-export interface ButtonProps {
-    content: string | React.ReactNode;
-    onPress?: () => void;
-    style?: StyleProp<ViewStyle>;
-    width?: string | number;
-    height?: string | number;
+export interface ModalProps {
+    isVisibleModal: boolean;
+    onCancel: () => void;
+    onSave: () => void;
+    userSkills: UserSkill[];
+};
+
+export interface StarRatingProps {
+    rating: number;
+    onRatingChange: (newRating: number) => void;
+    isEditing: boolean;
+    onSave: () => void;
+};
+
+export interface AuthUserContextProps {
+    username: string;
+    setUsername: (username: string) => void;
+    password: string;
+    setPassword: (password: string) => void;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    loginUser: () => Promise<void>;
+    signOut: () => Promise<void>;
+    signed: boolean;
+};
+
+export interface RegisterUserContextProps {
+    username: string;
+    setUsername: (username: string) => void;
+    password: string;
+    setPassword: (password: string) => void;
+    confirmPassword: string;
+    setConfirmPassword: (confirmPassword: string) => void;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
 };
 
 export type RootPublicStackParamList = {
@@ -62,7 +120,7 @@ export interface Skill {
 export interface UserSkillRequest {
     skillId: number;
     userId: number;
-}
+};
 
 export interface UserSkill {
     userSkillId: number;
@@ -84,4 +142,4 @@ export interface UpdateUserSkill {
 export interface UpdateUserSkillLevelResponse {
     success: boolean;
     message: string;
-}
+};

@@ -1,17 +1,11 @@
 import { useState } from "react";
-import { UserSkill } from "../../interfaces";
+import { CardProps } from "../../interfaces";
 import { styles } from "./styles";
 import { updateUserSkillLevel } from "../../api";
 import { Alert, Image, Text, View } from "react-native";
 import Button from "../Button";
 import Icon from "../Icon";
 import StarRating from "../StarRating";
-
-interface CardProps {
-    userSkill: UserSkill;
-    deleteSkill: (userId: number) => void;
-    refreshSkills: () => void;
-}
 
 export default function Card({ userSkill, deleteSkill, refreshSkills }: CardProps) {
     const [isEditing, setIsEditing] = useState(false);
@@ -70,4 +64,4 @@ export default function Card({ userSkill, deleteSkill, refreshSkills }: CardProp
             </View>
         </View>
     );
-}
+};

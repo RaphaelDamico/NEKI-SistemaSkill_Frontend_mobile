@@ -4,7 +4,6 @@ import { Text, TextInput, View } from "react-native";
 import { InputProps } from "../../interfaces";
 import Icon from "../Icon";
 
-
 export default function Input({ label, type, value, onChangeText, placeholder, id, hasIcon }: InputProps) {
     const [showPassword, setShowPassword] = useState<boolean>(false)
 

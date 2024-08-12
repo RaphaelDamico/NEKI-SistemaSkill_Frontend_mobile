@@ -22,7 +22,7 @@ export default function App() {
 
   if (!loaded && !error) {
     return null;
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +35,7 @@ export default function App() {
       </RegisterUserProvider>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

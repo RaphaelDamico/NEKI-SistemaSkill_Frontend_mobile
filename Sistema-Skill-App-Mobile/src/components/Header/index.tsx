@@ -5,10 +5,7 @@ import { Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useAuthUser } from "../../contexts/AuthUserContext";
 import Icon from "../Icon";
-
-interface HeaderProps {
-    setIsModalOpen: (value: boolean) => void;
-}
+import { HeaderProps } from "../../interfaces";
 
 export default function Header({ setIsModalOpen }: HeaderProps) {
     const [username, setUsername] = useState<string | null>(null);

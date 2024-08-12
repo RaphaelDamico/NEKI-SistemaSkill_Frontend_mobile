@@ -1,12 +1,7 @@
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
-import { Skill } from "../../interfaces";
+import { Pressable, Text, View } from "react-native";
+import { CardModalProps } from "../../interfaces";
 import { styles } from "./styles";
 import CustomCheckbox from "../Checkbox";
-
-interface CardModalProps {
-    skill: Skill;
-    onValueChange: () => void;
-};
 
 export default function CardModal({ skill, onValueChange }: CardModalProps) {
     return (
@@ -21,4 +16,4 @@ export default function CardModal({ skill, onValueChange }: CardModalProps) {
             </Pressable>
         </View>
     );
-}
+};

@@ -47,7 +47,7 @@ export const signupUser = async (payload: IUserCredentials): Promise<void> => {
         password
     } = payload
     try {
-        const response = await api.post(`auth/signup`, {
+        const response = await api.post(`users/signup`, {
             "username": username,
             "password": password
         });
